@@ -1,0 +1,6 @@
+@EasyAuthApi_HostAddress = http://localhost:5277
+
+GET {{EasyAuthApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
