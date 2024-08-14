@@ -1,11 +1,35 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
-    var user = User.Identity?.Name ?? "Anonymous";
+    ViewData["Title"] = $"Claims issued for {User.Identity?.Name ?? "Anonymous"}";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome, @user</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row justify-content-center">
+    <div class="col">
+        <h1>Claims</h1>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Claim</th>
+                        <th>Value</th>
+                        <th>Subject</th>
+                        <th>Issuer</th>
+                        <th>Original Issuer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var claim in Model.Claims)
+                    {
+                        <tr>
+                            <td>@claim.Type</td>
+                            <td>@claim.Value</td>
+                            <td>@claim.Subject?.Name</td>
+                            <td>@claim.Issuer</td>
+                            <td>@(claim.OriginalIssuer == claim.Issuer ? "same" : claim.OriginalIssuer) </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
