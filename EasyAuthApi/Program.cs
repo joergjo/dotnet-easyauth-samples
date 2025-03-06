@@ -84,7 +84,7 @@ app.MapGet("/claims", (ClaimsPrincipal principal) =>
 // will return a 403.
 app.MapGet("/profile/{id}", (string id, ClaimsPrincipal principal) =>
 {
-    app.Logger.LogInformation("User {User} is calling /profile/{id}", principal.Identity?.Name, id);
+    app.Logger.LogInformation("User {User} is calling /profile/{Id}", principal.Identity?.Name, id);
     var profile = new Dictionary<string, object?>
     {
         ["@odata.context"] = "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
