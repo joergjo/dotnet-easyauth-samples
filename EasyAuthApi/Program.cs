@@ -2,6 +2,7 @@ using System.Security.Claims;
 using System.Text;
 using EasyAuthApi.Authentication;
 
+// These are sample GUIDs. Update them according to the actual Entra ID groups you have.
 const string ProfileApiUsers = "1de4c055-4572-42eb-9b4b-b140ac0df59d";
 const string ClaimsApiUsers = "f0852f05-5f7d-48b8-a51c-977900aaedaf";
 
