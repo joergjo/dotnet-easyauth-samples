@@ -19,16 +19,15 @@ public class EasyAuthAuthenticationHandler : AuthenticationHandler<Authenticatio
     {
     }
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-    protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+    protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         if (!Request.Headers.TryGetValue("X-MS-CLIENT-PRINCIPAL", out var principalHeaderValue) ||
             !Request.Headers.TryGetValue("X-MS-CLIENT-PRINCIPAL-IDP", out var idpHeaderValue))
-            return AuthenticateResult.NoResult();
+            return Task.FromResult(AuthenticateResult.NoResult());
 
         if (principalHeaderValue.FirstOrDefault() is not { } encodedPrincipal ||
             idpHeaderValue.FirstOrDefault() is not { } idp) 
-            return AuthenticateResult.NoResult();
+            return Task.FromResult(AuthenticateResult.NoResult());
             
         var bytes = Convert.FromBase64String(encodedPrincipal);
         var json = Encoding.GetEncoding("iso-8859-1").GetString(bytes);
@@ -46,7 +45,6 @@ public class EasyAuthAuthenticationHandler : AuthenticationHandler<Authenticatio
             RoleType);
         var principal = new ClaimsPrincipal(identity);
         var ticket = new AuthenticationTicket(principal, Scheme.Name);
-        return AuthenticateResult.Success(ticket);
+        return Task.FromResult(AuthenticateResult.Success(ticket));
     }
 }
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
